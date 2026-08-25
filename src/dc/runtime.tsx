@@ -197,7 +197,7 @@ export function each(vals: Vals, listRaw: string, asName: string, body: (v: Vals
 
 /* ────────── helmet ────────── */
 const BASE_CSS =
-  'html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}' +
+  'html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}#dc-root{overflow-x:clip}' +
   '.sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;vertical-align:text-bottom}'
 
 /** Mounts the template's <helmet> children (styles/links/meta) into <head> while the page is shown. */
