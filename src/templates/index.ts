@@ -61,6 +61,14 @@ export const templates: TemplateMeta[] = [
     accent: '#c4b5fd',
     ...page(() => import('./liftflow-website1/Page')),
   },
+  {
+    slug: 'liftflow-saas',
+    name: 'LiftFlow Fluxo',
+    tagline: 'Liquid-glass hero with 3D tubes',
+    category: 'Landing',
+    accent: '#c084fc',
+    ...page(() => import('./liftflow-saas')),
+  },
 ]
 
 export const defaultTemplate = templates[0]
