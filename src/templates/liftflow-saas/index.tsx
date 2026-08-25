@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import './styles.css'
-import { ABOUT, CATS, CERTS, CONTACT, DOCS, FACTS, FAVORITES, INDUSTRIES, LOGO, NAV, PROFILE_PDF, SERVICES, STRENGTHS, WHY } from './content'
+import { ABOUT, CATS, CERTS, CONTACT, DOCS, FACTS, FAVORITES, IMG, INDUSTRIES, LOGO, NAV, PROFILE_PDF, SERVICES, STRENGTHS, WHY } from './content'
 
 /**
  * Template 06 — LiftFlow on a premium dark "Fluxo" theme: liquid-glass sticky
@@ -27,19 +27,30 @@ const Wa = () => (
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8.9-.3.2-.5 0a6.6 6.6 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.7-1.8c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c.6.3 1.1.4 1.5.5a3.6 3.6 0 0 0 1.7.1 2.8 2.8 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z" /></svg>
 )
 
-/** Certification / programme wordmarks as inline SVG. */
-function Mark({ top, main }: { top: string; main: string }) {
-  return (
-    <svg viewBox="0 0 150 40" aria-label={`${top} ${main}`} role="img">
-      <rect x="0.5" y="0.5" width="149" height="39" rx="8" fill="none" stroke="currentColor" strokeOpacity="0.35" />
-      <text x="14" y="15" fontFamily="Inter, system-ui, sans-serif" fontSize="8.5" fontWeight="500" letterSpacing="1.6" fill="currentColor" fillOpacity="0.7">{top}</text>
-      <text x="14" y="30" fontFamily="Inter, system-ui, sans-serif" fontSize="13" fontWeight="700" letterSpacing="0.2" fill="currentColor">{main}</text>
-      <path d="M128 12l4 4 8-8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 const pad = (n: number) => String(n).padStart(2, '0')
+
+/** Number that counts up from 0 the first time it scrolls into view. */
+function CountUp({ to, suffix = '' }: { to: number; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      io.disconnect()
+      const t0 = performance.now(), dur = 1400
+      const tick = (t: number) => {
+        const k = Math.min(1, (t - t0) / dur), ease = 1 - Math.pow(1 - k, 3)
+        el.textContent = String(Math.round(to * ease)).padStart(2, '0') + suffix
+        if (k < 1) requestAnimationFrame(tick)
+      }
+      requestAnimationFrame(tick)
+    }, { threshold: 0.4 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [to, suffix])
+  return <span ref={ref}>00{suffix}</span>
+}
 
 export default function LiftflowSaas() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -141,19 +152,46 @@ export default function LiftflowSaas() {
           </div>
         </section>
 
-        {/* ── social proof ── */}
-        <section className="fx-proof">
-          <p>Trusted across 7 industries in the Middle East</p>
-          <div className="fx-logos">
-            <a href="#quality"><Mark top="ISO 9001:2015" main="Quality" /></a>
-            <a href="#quality"><Mark top="ISO 14001:2015" main="Environment" /></a>
-            <a href="#quality"><Mark top="ISO 45001:2018" main="Safety" /></a>
-            <a href="#quality"><Mark top="ADNOC" main="ICV Registered" /></a>
-            <a href="#quality"><Mark top="DNV" main="Certified" /></a>
+        {/* ── showcase (bento) ── */}
+        <section className="fx-show">
+          <div className="fx-marquee" aria-hidden="true">
+            <div className="fx-marquee-track">
+              {[...INDUSTRIES, ...INDUSTRIES].map((i, k) => <span key={k}>{i.name}<i /></span>)}
+            </div>
           </div>
-          <div className="fx-review">
-            <div className="fx-stars" aria-label="5 out of 5 stars"><Star /><Star /><Star /><Star /><Star /></div>
-            <span>5.0/5 · {productCount} product lines · 8 categories · 7 industries</span>
+
+          <div className="fx-bento">
+            <div className="fx-tile fx-tile-photo fx-reveal">
+              <img src={IMG.offshoreCrane} alt="Offshore crane lift" fetchPriority="high" />
+              <div className="fx-tile-cap">
+                <span className="fx-eyebrow">Field operations</span>
+                <h3>Certified rigging, inspected and load-tested before every dispatch.</h3>
+                <a className="fx-btn fx-btn-glass" href="#services">Our services <Arrow /></a>
+              </div>
+            </div>
+
+            <div className="fx-tile fx-tile-stats fx-reveal">
+              <span className="fx-eyebrow">By the numbers</span>
+              <div className="fx-stat"><b><CountUp to={52} /></b><span>Product lines across 8 categories</span></div>
+              <div className="fx-stat"><b><CountUp to={7} /></b><span>Industries served in the Middle East</span></div>
+              <div className="fx-stat"><b><CountUp to={3} /></b><span>ISO management systems certified</span></div>
+            </div>
+
+            <div className="fx-tile fx-tile-cert fx-reveal">
+              <div className="fx-ring"><Shield /></div>
+              <span className="fx-eyebrow">Certified &amp; registered</span>
+              <ul>
+                <li>ISO 9001 · 14001 · 45001</li>
+                <li>ADNOC ICV registered</li>
+                <li>DNV certified components</li>
+              </ul>
+            </div>
+
+            <div className="fx-tile fx-tile-review fx-reveal">
+              <div className="fx-stars" aria-label="5 out of 5 stars"><Star /><Star /><Star /><Star /><Star /></div>
+              <p>"From inquiry to delivery, Lift Flow supplied certified assemblies with full traceability — exactly what offshore work demands."</p>
+              <span>Trusted across 7 industries · Musaffah, Abu Dhabi</span>
+            </div>
           </div>
         </section>
 

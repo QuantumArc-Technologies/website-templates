@@ -317,3 +317,48 @@
   .fx-footer-grid { grid-template-columns: 1fr; }
   .fx-form .fx-btn { width: 100%; }
 }
+
+/* ═══════════════ showcase bento ═══════════════ */
+.fx-show { border-top: 1px solid rgba(255, 255, 255, 0.05); padding: 32px 0 80px; margin-top: 40px; }
+.fx-marquee { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.fx-marquee-track { display: flex; width: max-content; gap: 0; animation: fx-marq 34s linear infinite; }
+.fx-marquee-track span { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; font-size: 0.8rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
+.fx-marquee-track span i { width: 6px; height: 6px; border-radius: 50%; background: var(--grad-btn); opacity: .8; }
+.fx-marquee:hover .fx-marquee-track { animation-play-state: paused; }
+@keyframes fx-marq { to { transform: translateX(-50%); } }
+
+.fx-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 240px; gap: 16px; margin-top: 40px; }
+.fx-tile { position: relative; overflow: hidden; border-radius: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); padding: 26px; transition: transform .25s, border-color .25s; }
+.fx-tile:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.16); }
+.fx-tile-photo { grid-column: span 2; grid-row: span 2; padding: 0; display: flex; align-items: flex-end; }
+.fx-tile-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s; }
+.fx-tile-photo:hover img { transform: scale(1.04); }
+.fx-tile-cap { position: relative; width: 100%; padding: 28px; background: linear-gradient(180deg, transparent, rgba(3, 3, 3, 0.75) 40%, rgba(3, 3, 3, 0.92)); }
+.fx-tile-cap h3 { margin: 12px 0 18px; font-size: 1.4rem; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; max-width: 24ch; }
+.fx-tile-stats { grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
+.fx-tile-stats::after { content: ''; position: absolute; inset: auto -40% -40% auto; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(circle, rgba(124, 58, 237, 0.35), transparent 65%); pointer-events: none; }
+.fx-stat b { display: block; font-size: 2.6rem; font-weight: 700; letter-spacing: -0.04em; line-height: 1; background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fx-stat > span { display: block; margin-top: 6px; font-size: 0.82rem; color: var(--text-2); }
+.fx-tile-cert { display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; }
+.fx-tile-cert ul { list-style: none; display: grid; gap: 6px; font-size: 0.9rem; font-weight: 500; }
+.fx-tile-cert ul li::before { content: '✓'; margin-right: 8px; color: #a78bfa; }
+.fx-ring { position: absolute; top: 22px; right: 22px; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; color: #c084fc; }
+.fx-ring::before { content: ''; position: absolute; inset: 0; border-radius: 50%; padding: 2px; background: conic-gradient(from 0deg, #ff008a, #8b5cf6, #3b82f6, #ff008a); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: fx-spin 6s linear infinite; }
+.fx-ring svg { width: 26px; height: 26px; filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.7)); }
+@keyframes fx-spin { to { transform: rotate(360deg); } }
+.fx-tile-review { display: flex; flex-direction: column; justify-content: space-between; }
+.fx-tile-review p { margin-top: 12px; font-size: 0.95rem; line-height: 1.5; color: var(--text); }
+.fx-tile-review > span { font-size: 0.78rem; color: var(--text-3); }
+
+@media (max-width: 1024px) {
+  .fx-bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 220px; }
+  .fx-tile-photo { grid-column: span 2; grid-row: span 1; min-height: 320px; }
+  .fx-tile-stats { grid-row: span 1; gap: 14px; }
+  .fx-stat b { font-size: 2rem; }
+}
+@media (max-width: 600px) {
+  .fx-bento { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 12px; }
+  .fx-tile-photo { grid-column: span 1; min-height: 300px; }
+  .fx-tile { padding: 22px; }
+  .fx-tile-cap h3 { font-size: 1.15rem; }
+}
