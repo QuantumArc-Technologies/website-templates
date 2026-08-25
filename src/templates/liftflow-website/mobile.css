@@ -1,0 +1,57 @@
+/* Mobile layer for "Liftflow Website" (04). The original page has no responsive
+   rules at all, so these ≤760px overrides are added on top; nothing here applies
+   on desktop, which stays pixel-identical to the source file. */
+@media (max-width: 760px) {
+  .lw-scope #dc-root { overflow-x: clip; }
+
+  /* header: hide the inline link row, make room for the hamburger */
+  .lw-scope [data-screen-label="Nav"] > div { padding-right: 76px !important; gap: 12px !important; }
+  .lw-scope [data-screen-label="Nav"] > div > div { display: none !important; }
+  .lw-scope [data-screen-label="Nav"] > div > a:last-child { padding: 10px 14px !important; font-size: 12px !important; white-space: nowrap; }
+
+  /* every multi-column grid collapses to one column */
+  .lw-scope [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+  /* hero art: fixed-width card / rings scale to the viewport */
+  .lw-scope [data-screen-label="Hero"] [style*="dropIn"] { width: 100% !important; left: 0 !important; transform: none !important; animation: none !important; }
+  .lw-scope [data-screen-label="Hero"] [style*="width: 392px"] { width: min(392px, 100%) !important; margin: 0 auto; }
+  .lw-scope [data-screen-label="Hero"] [style*="width: 520px"] { width: min(520px, 92vw) !important; height: min(520px, 92vw) !important; }
+  .lw-scope [data-screen-label="Hero"] [style*="width: 400px"] { width: min(400px, 80vw) !important; height: min(400px, 80vw) !important; }
+  .lw-scope [data-screen-label="Hero"] img[style*="height: 460px"] { height: 360px !important; }
+  .lw-scope [data-screen-label="Hero"] > div[style*="padding: 150px"] { padding-top: 120px !important; gap: 72px !important; }
+
+  /* marquee ticker must clip */
+  .lw-scope [data-screen-label="Ticker"] { overflow: hidden !important; }
+
+  /* content that assumed a wide row */
+  .lw-scope [data-screen-label] img { max-width: 100%; }
+  .lw-scope [data-screen-label="Product Portfolio"] [style*="display: flex"] { flex-wrap: wrap !important; }
+  .lw-scope [data-screen-label] [style*="max-width: "] { max-width: 100% !important; }
+  .lw-scope [data-screen-label] [style*="white-space: nowrap"] { white-space: normal !important; }
+}
+
+/* hamburger + drawer (hidden on desktop) */
+.lw-burger { display: none; }
+@media (max-width: 760px) {
+  .lw-burger {
+    display: flex; position: fixed; top: 17px; right: 16px; z-index: 70;
+    width: 40px; height: 40px; align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+    border-radius: 10px; border: 1px solid rgba(148,180,255,.22); background: rgba(13,26,51,.85); cursor: pointer; padding: 0;
+  }
+  .lw-burger span { display: block; width: 18px; height: 2px; background: #fff; transition: transform .25s, opacity .25s; }
+  .lw-burger span:last-child { background: #F7941D; }
+  .lw-burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .lw-burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .lw-burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); background: #fff; }
+}
+.lw-drawer {
+  position: fixed; inset: 0; z-index: 65; background: rgba(8,16,32,.96); backdrop-filter: blur(14px);
+  display: flex; flex-direction: column; padding: 100px 28px 40px; gap: 4px; animation: lw-fade .2s ease both;
+}
+.lw-drawer a {
+  font-family: 'Outfit', 'Inter', sans-serif; font-size: 30px; font-weight: 800; letter-spacing: -.01em; color: #fff;
+  padding: 12px 0; border-bottom: 1px solid rgba(148,180,255,.12); text-decoration: none;
+}
+.lw-drawer a:last-of-type { color: #F7941D; border-bottom: 0; }
+.lw-drawer small { margin-top: auto; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 2px; color: #8FA3C8; text-transform: uppercase; }
+@keyframes lw-fade { from { opacity: 0 } to { opacity: 1 } }

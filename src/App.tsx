@@ -1,31 +1,33 @@
-import { useState } from 'react'
+import { Suspense, useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom'
-import Sidebar from './components/Sidebar'
-import PreviewFrame, { type Viewport } from './components/PreviewFrame'
-import TemplateFrame from './components/TemplateFrame'
+import Dock from './components/Dock'
 import { defaultTemplate, findTemplate, templates } from './templates'
 
 function TemplatePage() {
   const { slug } = useParams()
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [viewport, setViewport] = useState<Viewport>('desktop')
-
   const template = findTemplate(slug)
+
+  useEffect(() => {
+    if (template) document.title = `${template.name} · Template Gallery`
+  }, [template])
+
+  // Warm the other templates' code chunks while idle so switching is instant.
+  useEffect(() => {
+    const idle = (window as any).requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1500))
+    const id = idle(() => templates.forEach((t) => t.load()))
+    return () => ((window as any).cancelIdleCallback ?? clearTimeout)(id)
+  }, [])
+
   if (!template) return <Navigate to={`/templates/${defaultTemplate.slug}`} replace />
+  const Page = template.component
 
   return (
-    <div className="flex h-full">
-      <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
-      <PreviewFrame
-        template={template}
-        index={templates.indexOf(template)}
-        viewport={viewport}
-        onViewport={setViewport}
-        onMenu={() => setMenuOpen(true)}
-      >
-        <TemplateFrame template={template} />
-      </PreviewFrame>
-    </div>
+    <>
+      <Suspense fallback={null}>
+        <Page key={template.slug} />
+      </Suspense>
+      <Dock current={template} />
+    </>
   )
 }
 

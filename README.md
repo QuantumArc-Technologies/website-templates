@@ -8,13 +8,20 @@ npm install
 npm run dev
 ```
 
-## Add a template
-Templates are self-contained HTML files served verbatim inside an iframe, so they render exactly as the original file.
+## Templates
+Each template started life as a Claude Design bundled `.html` page. `scripts/build-templates.sh` unpacks it
+(`scripts/unbundle.py`), writes its media to `public/templates/<slug>/assets/`, and compiles the `<x-dc>` markup +
+logic class into a plain React component at `src/templates/<slug>/Page.tsx` (`scripts/convert.py`). The tiny
+`src/dc/runtime.tsx` reproduces the original runtime semantics, so pages render pixel-identical but are bundled by
+Vite — no iframe, no runtime interpreter, ~10–18 KB gzipped JS per template.
 
-1. Drop the `.html` into `public/templates/`.
-2. Add an entry to `src/templates/index.ts` (slug, name, tagline, category, accent, file path).
+To refresh from updated source files:
+```sh
+./scripts/build-templates.sh "/path/to/Lift Flow"
+```
+To add a sixth template: add a `build <slug> "<file>.html"` line to that script and an entry in `src/templates/index.ts`.
 
-The first entry in the registry loads by default at `/`. Each template is reachable at `/templates/<slug>` in the gallery, or at its raw file path (e.g. `/templates/liftflow-home.html`) standalone.
+The first registry entry loads at `/`; each template is at `/templates/<slug>`. Use ← / → to switch.
 
 ## Deploy (Netlify)
 `netlify.toml` already sets build command (`npm run build`), publish dir (`dist`) and the SPA redirect. Either:

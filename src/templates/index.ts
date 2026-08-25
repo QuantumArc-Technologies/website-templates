@@ -1,18 +1,24 @@
+import { lazy, type LazyExoticComponent, type ComponentType } from 'react'
+
 export interface TemplateMeta {
   slug: string
   name: string
   tagline: string
   category: string
-  /** Accent color used in the sidebar swatch */
+  /** Accent color used in the gallery dock */
   accent: string
-  /** Path (under /public) to the self-contained HTML file rendered verbatim in an iframe */
-  file: string
+  /** Lazily loaded page component (generated from the original .html by scripts/build-templates.sh) */
+  component: LazyExoticComponent<ComponentType>
+  /** Triggers the chunk download (used for idle prefetch) */
+  load: () => Promise<unknown>
 }
 
+const page = (loader: () => Promise<{ default: ComponentType }>) => ({ component: lazy(loader), load: loader })
+
 /**
- * Template registry. Each template is a self-contained HTML file in
- * public/templates/ and is rendered exactly as-is inside an iframe.
- * To add one: drop the .html into public/templates/ and add an entry below.
+ * Template registry. Each template is compiled from its original bundled HTML
+ * into src/templates/<slug>/Page.tsx (see scripts/build-templates.sh) and its
+ * media lives in public/templates/<slug>/assets.
  */
 export const templates: TemplateMeta[] = [
   {
@@ -21,7 +27,7 @@ export const templates: TemplateMeta[] = [
     tagline: 'Specialized lifting & rigging',
     category: 'Corporate',
     accent: '#f5c451',
-    file: '/templates/liftflow-global-website.html',
+    ...page(() => import('./liftflow-global-website/Page')),
   },
   {
     slug: 'liftflow-global',
@@ -29,7 +35,7 @@ export const templates: TemplateMeta[] = [
     tagline: 'Lifting & rigging solutions',
     category: 'Corporate',
     accent: '#7dd3fc',
-    file: '/templates/liftflow-global.html',
+    ...page(() => import('./liftflow-global/Page')),
   },
   {
     slug: 'liftflow-home',
@@ -37,7 +43,7 @@ export const templates: TemplateMeta[] = [
     tagline: 'Motion-led homepage',
     category: 'Landing',
     accent: '#fda4af',
-    file: '/templates/liftflow-home.html',
+    ...page(() => import('./liftflow-home/Page')),
   },
   {
     slug: 'liftflow-website',
@@ -45,7 +51,7 @@ export const templates: TemplateMeta[] = [
     tagline: 'Engineering confidence in every lift',
     category: 'Corporate',
     accent: '#a7f3d0',
-    file: '/templates/liftflow-website.html',
+    ...page(() => import('./liftflow-website')),
   },
   {
     slug: 'liftflow-website1',
@@ -53,7 +59,7 @@ export const templates: TemplateMeta[] = [
     tagline: 'Abstract video hero',
     category: 'Landing',
     accent: '#c4b5fd',
-    file: '/templates/liftflow-website1.html',
+    ...page(() => import('./liftflow-website1/Page')),
   },
 ]
 
