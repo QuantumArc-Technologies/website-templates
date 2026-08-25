@@ -7,8 +7,13 @@ import sys, os
 root = sys.argv[1]
 
 PATCHES = {
+  'liftflow-website': [
+    ('/templates/liftflow-website/assets/ad03aaf45a.webp', '/templates/shared/logo.webp', None),
+    ('/templates/liftflow-website/assets/611855030a.webp', '/templates/shared/logo.webp', None),
+  ],
   # ── compact mobile menus ──────────────────────────────────────────────────
   'liftflow-global-website': [
+    ('/templates/liftflow-global-website/assets/35cec2a371.webp', '/templates/shared/logo.webp', None),
     ('padding:110px clamp(20px,6vw,60px) 40px;overflow-y:auto', 'padding:92px clamp(20px,6vw,60px) 32px;overflow-y:auto', 1),
     ('display:block;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:clamp(28px,8vw,44px);font-weight:800;letter-spacing:-.03em',
      'display:block;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:20px;font-weight:700;letter-spacing:-.02em', 1),
@@ -17,6 +22,7 @@ PATCHES = {
     ('margin-top:28px;font-family:\'IBM Plex Mono\',monospace;font-size:12.5px;line-height:2', 'margin-top:20px;font-family:\'IBM Plex Mono\',monospace;font-size:12px;line-height:1.9', 1),
   ],
   'liftflow-global': [
+    ('/templates/liftflow-global/assets/68d7de5311.webp', '/templates/shared/logo.webp', None),
     ("font:600 19px/1 'Archivo',sans-serif;letter-spacing:.01em;text-transform:uppercase;color:#15171B;padding:12px 0",
      "font:600 14px/1 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#15171B;padding:10px 0", None),
   ],
