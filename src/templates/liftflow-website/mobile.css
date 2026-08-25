@@ -46,11 +46,11 @@
 }
 .lw-drawer {
   position: fixed; inset: 0; z-index: 65; background: rgba(8,16,32,.96); backdrop-filter: blur(14px);
-  display: flex; flex-direction: column; padding: 100px 28px 40px; gap: 4px; animation: lw-fade .2s ease both;
+  display: flex; flex-direction: column; padding: 84px 28px 32px; gap: 2px; animation: lw-fade .2s ease both;
 }
 .lw-drawer a {
-  font-family: 'Outfit', 'Inter', sans-serif; font-size: 30px; font-weight: 800; letter-spacing: -.01em; color: #fff;
-  padding: 12px 0; border-bottom: 1px solid rgba(148,180,255,.12); text-decoration: none;
+  font-family: 'Outfit', 'Inter', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: 0; color: #fff;
+  padding: 10px 0; border-bottom: 1px solid rgba(148,180,255,.12); text-decoration: none;
 }
 .lw-drawer a:last-of-type { color: #F7941D; border-bottom: 0; }
 .lw-drawer small { margin-top: auto; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 2px; color: #8FA3C8; text-transform: uppercase; }

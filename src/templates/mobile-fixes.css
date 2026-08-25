@@ -1,0 +1,9 @@
+/* Small phone-only fixes for issues present in the original pages.
+   Scoped per template via the data-template wrapper in App.tsx. */
+
+/* 02 LiftFlow Global: logo + quote button pushed the hamburger off-screen (<480px) */
+@media (max-width: 480px) {
+  [data-template="liftflow-global"] div:has(> [data-nav-b]) { gap: 10px !important; padding-left: 14px !important; padding-right: 14px !important; }
+  [data-template="liftflow-global"] div:has(> [data-nav-b]) > a:first-child img { height: 30px !important; width: auto !important; }
+  [data-template="liftflow-global"] div:has(> [data-nav-b]) > a:not(:first-child) { padding: 11px 12px !important; font-size: 11px !important; letter-spacing: .04em !important; }
+}

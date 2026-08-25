@@ -2,6 +2,7 @@ import { Suspense, useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Dock from './components/Dock'
 import { defaultTemplate, findTemplate, templates } from './templates'
+import './templates/mobile-fixes.css'
 
 function TemplatePage() {
   const { slug } = useParams()
@@ -23,9 +24,11 @@ function TemplatePage() {
 
   return (
     <>
-      <Suspense fallback={null}>
-        <Page key={template.slug} />
-      </Suspense>
+      <div data-template={template.slug}>
+        <Suspense fallback={null}>
+          <Page key={template.slug} />
+        </Suspense>
+      </div>
       <Dock current={template} />
     </>
   )
