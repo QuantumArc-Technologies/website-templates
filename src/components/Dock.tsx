@@ -81,7 +81,7 @@ export default function Dock({ current }: Props) {
                   </span>
                   <div className="leading-tight">
                     <p className="text-[15px] font-semibold">Template Gallery</p>
-                    <p className="text-[11px] text-zinc-500">by Vaishakh K · {templates.length} templates</p>
+                    <p className="text-[11px] text-zinc-500">{templates.length} templates</p>
                   </div>
                 </div>
                 <button
