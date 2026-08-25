@@ -21,6 +21,13 @@ PATCHES = {
      "font:600 14px/1 'Archivo',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#15171B;padding:10px 0", None),
   ],
   'liftflow-home': [
+    # logo without the white pill; slightly deeper header shade so the navy wordmark stays legible
+    ('display:flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:12px;background:rgba(255,255,255,0.94);box-shadow:0 6px 26px rgba(255,16,83,0.18)',
+     'display:flex;align-items:center;justify-content:center;padding:7px 0', 1),
+    ('background:linear-gradient(180deg,rgba(8,1,4,0.85) 0%,rgba(8,1,4,0.35) 60%,rgba(8,1,4,0) 100%);backdrop-filter:blur(10px)',
+     'background:linear-gradient(180deg,rgba(8,1,4,0.96) 0%,rgba(8,1,4,0.72) 55%,rgba(8,1,4,0) 100%);backdrop-filter:blur(10px)', 1),
+    ('<img src={"/templates/shared/logo.webp"} alt={"LIFTFLOW"} style={css("display:block;height:30px;width:auto")} fetchPriority',
+     '<img src={"/templates/shared/logo.webp"} alt={"LIFTFLOW"} style={css("display:block;height:36px;width:auto;filter:drop-shadow(0 1px 2px rgba(0,0,0,.6))")} fetchPriority', 1),
     ("font-family:'Outfit',sans-serif;font-size:34px;font-weight:900;letter-spacing:-0.01em;color:#fff;padding:10px 0",
      "font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;letter-spacing:0;color:#fff;padding:9px 0", None),
     ("font-family:'Outfit',sans-serif;font-size:34px;font-weight:900;letter-spacing:-0.01em;color:rgba(255,255,255,0.8);padding:10px 0",
