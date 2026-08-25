@@ -1,5 +1,3 @@
-import { lazy, type LazyExoticComponent, type ComponentType } from 'react'
-
 export interface TemplateMeta {
   slug: string
   name: string
@@ -7,54 +5,55 @@ export interface TemplateMeta {
   category: string
   /** Accent color used in the sidebar swatch */
   accent: string
-  component: LazyExoticComponent<ComponentType>
+  /** Path (under /public) to the self-contained HTML file rendered verbatim in an iframe */
+  file: string
 }
 
 /**
- * Template registry. To add a template:
- *  1. create src/templates/<folder>/index.tsx exporting a default component
- *  2. add an entry below
+ * Template registry. Each template is a self-contained HTML file in
+ * public/templates/ and is rendered exactly as-is inside an iframe.
+ * To add one: drop the .html into public/templates/ and add an entry below.
  */
 export const templates: TemplateMeta[] = [
   {
-    slug: 'template-one',
-    name: 'Template One',
-    tagline: 'Bold editorial landing page',
-    category: 'Landing',
+    slug: 'liftflow-global-website',
+    name: 'Liftflow Global Website',
+    tagline: 'Specialized lifting & rigging',
+    category: 'Corporate',
     accent: '#f5c451',
-    component: lazy(() => import('./one')),
+    file: '/templates/liftflow-global-website.html',
   },
   {
-    slug: 'template-two',
-    name: 'Template Two',
-    tagline: 'Minimal portfolio',
-    category: 'Portfolio',
+    slug: 'liftflow-global',
+    name: 'LiftFlow Global',
+    tagline: 'Lifting & rigging solutions',
+    category: 'Corporate',
     accent: '#7dd3fc',
-    component: lazy(() => import('./two')),
+    file: '/templates/liftflow-global.html',
   },
   {
-    slug: 'template-three',
-    name: 'Template Three',
-    tagline: 'SaaS product page',
-    category: 'SaaS',
-    accent: '#a7f3d0',
-    component: lazy(() => import('./three')),
-  },
-  {
-    slug: 'template-four',
-    name: 'Template Four',
-    tagline: 'Agency / studio site',
-    category: 'Agency',
+    slug: 'liftflow-home',
+    name: 'LiftFlow Home',
+    tagline: 'Motion-led homepage',
+    category: 'Landing',
     accent: '#fda4af',
-    component: lazy(() => import('./four')),
+    file: '/templates/liftflow-home.html',
   },
   {
-    slug: 'template-five',
-    name: 'Template Five',
-    tagline: 'Blog & publication',
-    category: 'Blog',
+    slug: 'liftflow-website',
+    name: 'Liftflow Website',
+    tagline: 'Engineering confidence in every lift',
+    category: 'Corporate',
+    accent: '#a7f3d0',
+    file: '/templates/liftflow-website.html',
+  },
+  {
+    slug: 'liftflow-website1',
+    name: 'LiftFlow Website 1',
+    tagline: 'Abstract video hero',
+    category: 'Landing',
     accent: '#c4b5fd',
-    component: lazy(() => import('./five')),
+    file: '/templates/liftflow-website1.html',
   },
 ]
 

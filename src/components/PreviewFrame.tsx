@@ -1,4 +1,4 @@
-import { Suspense, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { Menu, Monitor, Tablet, Smartphone, ExternalLink } from 'lucide-react'
 import type { TemplateMeta } from '../templates'
 
@@ -48,7 +48,7 @@ export default function PreviewFrame({ template, index, viewport, onViewport, on
           ))}
         </div>
         <a
-          href={`/templates/${template.slug}?bare=1`}
+          href={template.file}
           target="_blank"
           rel="noreferrer"
           className="hidden items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-xs text-zinc-300 hover:bg-ink-3 sm:flex"
@@ -57,22 +57,14 @@ export default function PreviewFrame({ template, index, viewport, onViewport, on
         </a>
       </header>
 
-      <div className="scrollbar-thin flex-1 overflow-auto bg-[radial-gradient(circle_at_1px_1px,#26262c_1px,transparent_0)] bg-[size:20px_20px] p-3 sm:p-5">
+      <div className="flex-1 overflow-hidden bg-[radial-gradient(circle_at_1px_1px,#26262c_1px,transparent_0)] bg-[size:20px_20px] p-3 sm:p-5">
         <div
-          className="mx-auto min-h-full overflow-hidden rounded-xl bg-white shadow-[0_20px_60px_-20px_rgba(0,0,0,.8)] ring-1 ring-white/10 transition-[max-width] duration-300"
+          className="mx-auto h-full overflow-hidden rounded-xl bg-ink shadow-[0_20px_60px_-20px_rgba(0,0,0,.8)] ring-1 ring-white/10 transition-[max-width] duration-300"
           style={{ maxWidth: widths[viewport] }}
         >
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          {children}
         </div>
       </div>
-    </div>
-  )
-}
-
-function Loading() {
-  return (
-    <div className="grid min-h-[60vh] place-items-center text-zinc-400">
-      <span className="h-6 w-6 animate-spin rounded-full border-2 border-zinc-300 border-t-zinc-700" />
     </div>
   )
 }
