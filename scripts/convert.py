@@ -190,6 +190,14 @@ def emit(node, in_svg=False):
             cls_parts.append('attr(v,' + js(class_val) + ')' if '{{' in class_val else js(class_val))
         cls_parts += pseudo
         props.append('className={cx(' + ','.join(cls_parts) + ')}')
+    if tag == 'img':
+        # first images in document order are the logo / hero: fetch eagerly with
+        # high priority; everything further down loads lazily near the viewport
+        IMG_COUNT[0] += 1
+        if IMG_COUNT[0] <= 3:
+            props.append('fetchPriority={"high"}')
+        elif not any(pr.startswith('loading=') for pr in props):
+            props.append('loading={"lazy"} decoding={"async"}')
     open_tag = '<' + tag + (' ' + ' '.join(props) if props else '')
     if tag in VOID or not node.children:
         return open_tag + '/>'
@@ -199,6 +207,7 @@ def emit(node, in_svg=False):
     return open_tag + '>' + inner + '</' + tag + '>'
 
 
+IMG_COUNT = [0]
 jsx = emit_children(p.root, False)
 
 out = f'''// @ts-nocheck
